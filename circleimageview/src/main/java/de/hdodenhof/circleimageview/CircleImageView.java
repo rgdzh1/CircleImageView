@@ -495,26 +495,29 @@ public class CircleImageView extends ImageView {
         mRebuildShader = true;
     }
 
-
-
-
-
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (mDisableCircularTransformation) {
             return super.onTouchEvent(event);
         }
-
         return inTouchableArea(event.getX(), event.getY()) && super.onTouchEvent(event);
     }
 
+    /**
+     * 计算当前触摸点是否在CircleImageView范围内, 如果在其中则代表当前触摸事件被CircleImageView消费了.
+     * @param x
+     * @param y
+     * @return
+     */
     private boolean inTouchableArea(float x, float y) {
         if (mBorderRect.isEmpty()) {
             return true;
         }
-
+        // Math.pow(a,2):计算a值的平方
+        // x - mBorderRect.centerX(): 当前点x坐标距离圆心距离.
+        // Math.pow(x - mBorderRect.centerX(), 2) + Math.pow(y - mBorderRect.centerY(), 2) :两直边的平方和小于或者等于半径平方和.勾股定理.
+        // 就是算当前的点在不在CircleImageView范围内.
         return Math.pow(x - mBorderRect.centerX(), 2) + Math.pow(y - mBorderRect.centerY(), 2) <= Math.pow(mBorderRadius, 2);
     }
     
