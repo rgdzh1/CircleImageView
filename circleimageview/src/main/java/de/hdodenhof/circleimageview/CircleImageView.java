@@ -86,14 +86,11 @@ public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context) {
         super(context);
-
         init();
     }
-
     public CircleImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
-
     public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
@@ -104,10 +101,14 @@ public class CircleImageView extends ImageView {
         a.recycle();
         init();
     }
-
+    /**
+     * 初始化一些东西
+     */
     private void init() {
         mInitialized = true;
+        // 设置图片缩放类型, 这个与updateShaderMatrix()中逻辑呼应.
         super.setScaleType(SCALE_TYPE);
+        // 下面是对画笔的基本操作.
         mBitmapPaint.setAntiAlias(true);
         mBitmapPaint.setDither(true);
         mBitmapPaint.setFilterBitmap(true);
